@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model ApplicationUser
+
+@{
+    ViewData["Title"] = "Index";
+   
+}
+
+<h1>Your Profile</h1>
+
+
+<div class="card mt-6">
+  <img src="https://www.w3schools.com/w3images/team2.jpg" alt="John" style="width:400px;height:300px">
+  <h1>@Model.FullName</h1>
+  <h3>UserName: @Model.UserName</h3>
+  <p>Contact Number : @Model.PhoneNumber</p>  
+</div>
+<div class = "container">
+    <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Admin Dashboard</p>
+</div>
+<div class="row">
+    <div class="col-lg-6 mb-4 mt-5">
+        <div class="card bg-danger text-white shadow">
+            <div class="card-body">
+                 <a class="text-light text-decoration-none" href = "/Appointment/Index">View Appointments</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-4 mt-5">
+        <div class="card bg-success text-white shadow">
+            <div class="card-body">
+                <a class="text-light text-decoration-none" href="/Account/AssignDepartment">Assign Doctor to Department</a>              
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-4 mt-5">
+        <div class="card bg-info text-white shadow">
+            <div class="card-body">
+                <a class="text-light text-decoration-none" href="/Account/AssignRole">Assign Role </a>             
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-4 mt-5">
+        <div class="card bg-warning text-white shadow">
+            <div class="card-body">
+                <a class="text-light text-decoration-none" href="/Department/Create">Add Department</a>               
+            </div>
+        </div>
+    </div>
+</div>
