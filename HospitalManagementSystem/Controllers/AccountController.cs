@@ -1,4 +1,5 @@
 ﻿using HospitalManagementSystem.Models;
+using HospitalManagementSystem.Services.AccountServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,16 @@ namespace HospitalManagementSystem.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly HMSDbContext _hmsDbContext;
+        private readonly IAccountServices _accountServices;
         
 
-        public AccountController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,RoleManager<IdentityRole> roleManager,HMSDbContext hMSDbContext)
+        public AccountController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,RoleManager<IdentityRole> roleManager,HMSDbContext hMSDbContext, IAccountServices accountServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _hmsDbContext = hMSDbContext;
+            _accountServices = accountServices;
         }             
         //[Authorize (Roles="Admin")]
         public async Task<IActionResult> Index()
@@ -32,7 +35,25 @@ namespace HospitalManagementSystem.Controllers
             {
                 return View(CurrentUser);
             }
+            else if(currentRole == 2)
+            {
+                return RedirectToAction("DoctorProfile");
+            }
             return RedirectToAction("Register");
+        }
+        [Authorize (Roles ="Doctor")]
+        public async Task<IActionResult> DoctorProfile()
+        {
+            ApplicationUser CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
+            // Show department of the doctor
+            // Show appointment details assigned to the doctor
+            // Show other common details
+            String did = CurrentUser.Id;
+            List<DepartmentModel> department = _accountServices.GetDepartment(did);
+            List<AppointmentModel> appointments = _accountServices.GetAppointmentDetails(did);
+            ViewBag.Department = department;
+            ViewBag.Appointment = appointments;
+            return View(CurrentUser);
         }
         [AllowAnonymous]
         [HttpGet]

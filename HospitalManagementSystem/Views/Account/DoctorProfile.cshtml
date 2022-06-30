@@ -1,10 +1,11 @@
-﻿@using Microsoft.AspNetCore.Identity
-@model ApplicationUser
+﻿@model ApplicationUser
 
 @{
-    ViewData["Title"] = "Index";
-   
+    ViewData["Title"] = "DoctorProfile";
+    List<DepartmentModel> department = ViewBag.Department;
+    List<AppointmentModel> appointments = ViewBag.Appointment;
 }
+
 <section style="background-color: #eee;">
   <div class="container py-5 mt-5">
     <div class="row">
@@ -13,8 +14,8 @@
           <div class="card-body text-center">           
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">@Model.FullName</h5>
-            <p class="text-muted mb-1">Admin</p>
+            <h5 class="my-3">Dr. @Model.FullName</h5>
+            <p class="text-muted mb-1">@department[0].DepartmentName</p>
             <p class="text-muted mb-4">@Model.UserName</p>
           </div>
         </div>
@@ -63,36 +64,31 @@
   </div>
 </div>
 </section>
-<div class = "container">
-    <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Admin Dashboard</p>
-</div>
-<div class="row">
-    <div class="col-lg-6 mb-4 mt-5">
-        <div class="card bg-danger text-white shadow">
-            <div class="card-body">
-                 <a class="text-light text-decoration-none" href = "/Appointment/Index">View Appointments</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 mb-4 mt-5">
-        <div class="card bg-success text-white shadow">
-            <div class="card-body">
-                <a class="text-light text-decoration-none" href="/Account/AssignDepartment">Assign Doctor to Department</a>              
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 mb-4 mt-5">
-        <div class="card bg-info text-white shadow">
-            <div class="card-body">
-                <a class="text-light text-decoration-none" href="/Account/AssignRole">Assign Role </a>             
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 mb-4 mt-5">
-        <div class="card bg-warning text-white shadow">
-            <div class="card-body">
-                <a class="text-light text-decoration-none" href="/Department/Create">Add Department</a>               
-            </div>
-        </div>
-    </div>
-</div>
+<h2>Your Appointment Details</h2>
+<table class = "table">
+         <thead>
+             <tr>
+                 <th>Id</th>
+                 <th>Description</th>
+                 <th>UserId</th>
+                 <th>Schedule</th>
+             </tr>
+         </thead>
+         <tbody>
+        @foreach(var items in appointments)
+        {
+            if(items.Condition == "Approved")
+            {
+             <tr>
+                <td>@items.Id</td>
+                <td>@items.Description</td>
+                <td>@items.UserId</td>
+                <td>@items.Schedule</td>
+            </tr>
+            }
+        }
+    </tbody>
+</table> 
+
+
+

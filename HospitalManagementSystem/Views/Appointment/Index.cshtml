@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<HospitalManagementSystem.Models.AppointmentViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Appointments";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Appointments</h1>
 <table class="table">
     <thead>
         <tr>
@@ -34,7 +30,7 @@
                 @Html.DisplayNameFor(model => model.DepartmentName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Condition)
+                Status
             </th>
             <th></th>
         </tr>
@@ -68,8 +64,7 @@
             </td>
             <td>
                 <a href = "/Appointment/AssignAppointment?did=@item.DepartmentId&aid=@item.Id">Edit</a>
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                
             </td>
         </tr>
 }

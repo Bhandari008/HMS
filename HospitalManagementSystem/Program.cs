@@ -1,5 +1,6 @@
 using HospitalManagementSystem;
 using HospitalManagementSystem.Models;
+using HospitalManagementSystem.Services.AccountServices;
 using HospitalManagementSystem.Services.AppointmentServices;
 using HospitalManagementSystem.Services.DepartmentServices;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
 builder.Services.AddScoped<IAppointmentServices, AppointmentServices>();
+builder.Services.AddScoped<IAccountServices, AccountServices>();
 
 builder.Services.AddDbContext<HMSDbContext>(op =>
 {
