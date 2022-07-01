@@ -41,7 +41,7 @@ namespace HospitalManagementSystem.Controllers
                 string uid = CurrentUser.Id;
                 model.UserId = uid;
                 _appointmentServices.Add(model);
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
 
            
         }

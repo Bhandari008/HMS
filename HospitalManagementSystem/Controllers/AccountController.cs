@@ -26,32 +26,51 @@ namespace HospitalManagementSystem.Controllers
             _hmsDbContext = hMSDbContext;
             _accountServices = accountServices;
         }             
-        //[Authorize (Roles="Admin")]
+        
         public async Task<IActionResult> Index()
         {
             ApplicationUser CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
-            int currentRole = _userManager.GetRolesAsync(CurrentUser).Id;
-            if (currentRole == 1)
+
+            int currentRole = _accountServices.GetRoleID(CurrentUser);
+            if(currentRole == 1)
             {
-                return View(CurrentUser);
+                return RedirectToAction("AdminProfile");
             }
             else if(currentRole == 2)
             {
                 return RedirectToAction("DoctorProfile");
             }
+            else if(currentRole == 3)
+            {
+                return RedirectToAction("PatientProfile");
+            }
             return RedirectToAction("Register");
+        }
+
+        [Authorize (Roles ="Admin") ]
+        public async Task<IActionResult> AdminProfile()
+        {
+            ApplicationUser CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
+            return View(CurrentUser);
         }
         [Authorize (Roles ="Doctor")]
         public async Task<IActionResult> DoctorProfile()
         {
             ApplicationUser CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
-            // Show department of the doctor
-            // Show appointment details assigned to the doctor
-            // Show other common details
             String did = CurrentUser.Id;
             List<DepartmentModel> department = _accountServices.GetDepartment(did);
             List<AppointmentModel> appointments = _accountServices.GetAppointmentDetails(did);
             ViewBag.Department = department;
+            ViewBag.Appointment = appointments;
+            return View(CurrentUser);
+        }
+
+        [Authorize (Roles ="Patient")]
+        public async Task<IActionResult> PatientProfile()
+        {
+            ApplicationUser CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
+            String uid = CurrentUser.Id;
+            List<AppointmentModel> appointments = _accountServices.GetAppointmentForUser(uid);
             ViewBag.Appointment = appointments;
             return View(CurrentUser);
         }

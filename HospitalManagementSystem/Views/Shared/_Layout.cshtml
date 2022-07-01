@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,6 +28,25 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/Account/Login">Sign In</a>
               </li>
+                @if(User.IsInRole("Admin"))
+                        {
+                                         <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/Account/AdminProfile">Profile</a>
+                                         </li> 
+                        }
+                @if(User.IsInRole("Doctor"))
+                        {
+                                          <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/Account/DoctorProfile">Profile</a>
+                                         </li>                           
+                        }
+                @if(User.IsInRole("Patient"))
+                        {
+                                          <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="/Account/PatientProfile">Profile</a>
+                                         </li>                           
+                        }
+
             </ul>
           </div>
         </div>

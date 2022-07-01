@@ -1,4 +1,5 @@
 ﻿using HospitalManagementSystem.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace HospitalManagementSystem.Services.AccountServices
 {
@@ -8,6 +9,10 @@ namespace HospitalManagementSystem.Services.AccountServices
 
 
         public List<AppointmentModel> GetAppointmentDetails(string doctorId);
+
+        public List<AppointmentModel> GetAppointmentForUser(string userId);
+
+        public int GetRoleID(ApplicationUser user);
 
     }
 }

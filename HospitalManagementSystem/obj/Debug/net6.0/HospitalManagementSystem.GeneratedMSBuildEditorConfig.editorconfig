@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = F:\Project\HospitalManagementSystem\HospitalManagementSystem
 build_property._RazorSourceGeneratorDebug = 
 
+[F:/Project/HospitalManagementSystem/HospitalManagementSystem/Views/Account/AdminProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBZG1pblByb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/Project/HospitalManagementSystem/HospitalManagementSystem/Views/Account/AssignDepartment.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBc3NpZ25EZXBhcnRtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -33,6 +37,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [F:/Project/HospitalManagementSystem/HospitalManagementSystem/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Project/HospitalManagementSystem/HospitalManagementSystem/Views/Account/PatientProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQYXRpZW50UHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/Project/HospitalManagementSystem/HospitalManagementSystem/Views/Account/Register.cshtml]
