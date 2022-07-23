@@ -23,7 +23,7 @@ namespace HospitalManagementSystem.Services.AccountServices
                                      where u.Id == doctorId
                                      select new DepartmentModel
                                      {
-                                        DepartmentName = d.DepartmentName,
+                                        DName = d.DName,
                                         Id = d.Id
                                      }).ToList();
             return departmentList;
@@ -64,10 +64,55 @@ namespace HospitalManagementSystem.Services.AccountServices
             return appointmentList;
         }
 
-        public int GetRoleID(ApplicationUser user)
+        public string GetRoleID(ApplicationUser user)
         {
-            int roles = _userManager.GetRolesAsync(user).Id;
+            string roles = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
             return roles;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

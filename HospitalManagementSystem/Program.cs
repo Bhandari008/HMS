@@ -2,6 +2,7 @@ using HospitalManagementSystem;
 using HospitalManagementSystem.Models;
 using HospitalManagementSystem.Services.AccountServices;
 using HospitalManagementSystem.Services.AppointmentServices;
+using HospitalManagementSystem.Services.BillServices;
 using HospitalManagementSystem.Services.DepartmentServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDepartmentServices, DepartmentServices>();
 builder.Services.AddScoped<IAppointmentServices, AppointmentServices>();
 builder.Services.AddScoped<IAccountServices, AccountServices>();
+builder.Services.AddScoped<IBillServices, BillServices>();
 
 builder.Services.AddDbContext<HMSDbContext>(op =>
 {
-    op.UseSqlServer("Data Source=(localdb)\\ProjectModels;Initial Catalog=HMSDB;Integrated Security=True;");
+    op.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=HMSDb;Integrated Security=True;");
 });
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
     .AddEntityFrameworkStores<HMSDbContext>()

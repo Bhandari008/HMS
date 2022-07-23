@@ -20,5 +20,13 @@ namespace HospitalManagementSystem.Services.DepartmentServices
             _hmsDbContext.Department.Add(model);
             _hmsDbContext.SaveChanges();
         }
+
+        public void Delete(int id)
+        {
+            DepartmentModel model = _hmsDbContext.Department.FirstOrDefault(x => x.Id == id);
+            _hmsDbContext.Department.Remove(model);
+            _hmsDbContext.SaveChanges();
+
+        }
     }
 }

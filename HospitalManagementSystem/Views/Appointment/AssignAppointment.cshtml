@@ -9,58 +9,57 @@
 
 <h4>AppointmentModel</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AssignAppointment" asp-controller="Appointment" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class = "form-group">
-                <label asp-for="Id" class = "control-label"></label>
-                <input type="hidden" asp-for="Id" value="@Model.Id" class="form-control"/>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" value="@Model.Description" class="form-control"/>       
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoctorId" class="control-label">Doctor Name</label>
-                <select asp-for="DoctorId" asp-items="doctorsList" class="form-control"></select>
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input value="@Model.isActive" type="hidden" class="form-check-input" asp-for="isActive" />
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="DepartmentId" class="control-label"></label>
-                <input asp-for="DepartmentId" value="@Model.DepartmentId" class="form-control" />
-                <span asp-validation-for="DepartmentId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Schedule" class="control-label"></label>
-                <input type = "hidden" asp-for="Schedule" value="@Model.Schedule" class="form-control" />
-                <span asp-validation-for="Schedule" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Condition" class="control-label"></label>
-                <input asp-for="Condition" class="form-control" />
-                <span asp-validation-for="Condition" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input type = "hidden" asp-for="UserId" value="@Model.UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<section class=" book text-size">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AssignAppointment" asp-controller="Appointment" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">                  
+                    <input type="hidden" asp-for="Id" value="@Model.Id" class="form-control p-3" />
+                    <span asp-validation-for="Description" class="text-danger text-size"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" value="@Model.Description" class="form-control p-3 text-size" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DoctorId" class="control-label">Doctor Name</label>
+                    <select asp-for="DoctorId" asp-items="doctorsList" class="form-control p-3 text-size"></select>
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input value="@Model.isActive" type="hidden" class="form-check-input" asp-for="isActive" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DepartmentId" class="control-label"></label>
+                    <input asp-for="DepartmentId" value="@Model.DepartmentId" class="form-control p-3 text-size" />
+                    <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    
+                    <input type="hidden" asp-for="Schedule" value="@Model.Schedule" class="form-control p-3 text-size" />
+                    <span asp-validation-for="Schedule" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Condition" class="control-label"></label>
+                    <select asp-for="Condition" class="form-control p-3 text-size">
+                        <option name="Approved" value = "Approved">Approved</option>
+                        <option name = "Pending" value = "Pending">Pending</option>
+                    </select>
+                    <span asp-validation-for="Condition" class="text-danger"></span>
+                </div>
+                <div class="form-group"> 
+                    <input type="hidden" asp-for="UserId" value="@Model.UserId" class="form-control p-3" />
+                    <span asp-validation-for="UserId" class="text-danger text-size"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+</section>
 

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<HospitalManagementSystem.Models.BillViewModel>
+
+@{
+    ViewData["Title"] = "BillUsers";
+}
+
+<h1>BillUsers</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<section class = "book text-size">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Appointment
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Condition)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Condition)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+</section>

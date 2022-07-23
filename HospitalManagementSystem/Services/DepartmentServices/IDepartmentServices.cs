@@ -6,5 +6,7 @@ namespace HospitalManagementSystem.Services.DepartmentServices
     {
         public List<DepartmentModel> Display();
         public void Add(DepartmentModel model);
+
+        public void Delete(int id);
     }
 }

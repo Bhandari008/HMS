@@ -1,0 +1,56 @@
+﻿@model HospitalManagementSystem.Models.BillViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<hr />
+<section class="book">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit" asp-controller="Bill" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="Id" value="@Model.Id" class="form-control p-3" />
+                    <span asp-validation-for="Id" class="text-danger text-size"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label text-size"></label>
+                    <input asp-for="UserId" class="form-control box" />
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="AppointmentId" value="@Model.AppointmentId" class="form-control p-3" />
+                    <span asp-validation-for="AppointmentId" class="text-danger text-size"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AppointmentDescription" class="control-label text-size"></label>
+                    <input asp-for="AppointmentDescription" class="box" />
+                    <span asp-validation-for="AppointmentDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label text-size"></label>
+                    <input asp-for="Amount" class="form-control box" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Condition" class="control-label text-size"></label>
+                    <select asp-for="Condition" class="form-control box">
+                        <option value="Pending" name="Pending">Pending</option>
+                        <option value="Paid" name="Paid">Paid</option>
+                    </select>
+                    <span asp-validation-for="Condition" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

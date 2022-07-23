@@ -19,7 +19,6 @@ namespace HospitalManagementSystem.Models
         public int DepartmentId { get; set; }
         
        
-
         public string? RoleName { get; set; }
 
     }

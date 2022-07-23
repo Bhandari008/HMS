@@ -1,57 +1,47 @@
-﻿@using System.Security.Claims
+﻿@using System.Security.Claims;
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HospitalManagementSystem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HospitalManagementSystem.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-        <div class="container-fluid  ">
-          <a class="navbar-brand text-capitalize"  href="#">Hospital Management System</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/Home/Index">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/Account/Register">Register</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/Account/Login">Sign In</a>
-              </li>
-                @if(User.IsInRole("Admin"))
-                        {
-                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="/Account/AdminProfile">Profile</a>
-                                         </li> 
-                        }
-                @if(User.IsInRole("Doctor"))
-                        {
-                                          <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="/Account/DoctorProfile">Profile</a>
-                                         </li>                           
-                        }
-                @if(User.IsInRole("Patient"))
-                        {
-                                          <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="/Account/PatientProfile">Profile</a>
-                                         </li>                           
-                        }
 
-            </ul>
-          </div>
-        </div>
-      </nav>
-  </header>
+    <header class="header">
+
+        <a href="#" class="logo"> <i class="fas fa-heartbeat"></i> medcare. </a>
+
+        <nav class="navbar">
+            <a href="/Home/Index">home</a>
+            <a href="/Account/Register">register</a>
+            <a href="/Appointment/Create">book</a>
+            <a href="/Account/Login">sign in</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class = "nav-link active" aria-current = "page" href = "/Account/Logout">Log Out</a>
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="nav-link active" aria-current="page" href="/Account/AdminProfile">Profile</a>
+            }
+            @if (User.IsInRole("Doctor"))
+            {
+                <a class="nav-link active" aria-current="page" href="/Account/DoctorProfile">Profile</a>
+            }
+            @if (User.IsInRole("Patient"))
+            {
+                <a class="nav-link active" aria-current="page" href="/Account/PatientProfile">Profile</a>
+            }
+        </nav>
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+    </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -66,6 +56,69 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+
+
+        $(document).ready(function () {
+                    var message = "@TempData["ResponseMessage"]";
+                    var success = "@TempData["ResponseValue"]";
+                    if (message != null && message.length > 0) {
+                        if (success == "1") {
+                              const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: message
+        })
+                        } else if (success == "0") {
+                              const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'error',
+          title: message
+        })
+                        }
+                    }
+                })
+                 $('.delete').on('click', function (e) {
+                    e.preventDefault();
+                    var message = $(this).attr("data-message");
+                    var link = $(this).attr('href');
+                     Swal.fire({
+                         icon:"question",
+                        title: 'Are you sure?',
+                        text: message,
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085D6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'OK'
+                    })@Html.Raw(".then((result) => {if (result.value) {window.location.href = link; } });")
+                });
+    </script>
+        @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

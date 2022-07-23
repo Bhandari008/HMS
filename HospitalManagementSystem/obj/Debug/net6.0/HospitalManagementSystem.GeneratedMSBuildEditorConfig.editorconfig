@@ -59,6 +59,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwb2ludG1lbnRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/Project/HospitalManagementSystem/HospitalManagementSystem/Views/Bill/BillDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmlsbFxCaWxsRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Project/HospitalManagementSystem/HospitalManagementSystem/Views/Bill/BillUsers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmlsbFxCaWxsVXNlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Project/HospitalManagementSystem/HospitalManagementSystem/Views/Bill/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmlsbFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Project/HospitalManagementSystem/HospitalManagementSystem/Views/Bill/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmlsbFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/Project/HospitalManagementSystem/HospitalManagementSystem/Views/Department/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0bWVudFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

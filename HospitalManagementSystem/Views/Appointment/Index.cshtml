@@ -1,72 +1,67 @@
-﻿@model IEnumerable<HospitalManagementSystem.Models.AppointmentViewModel>
+﻿@model List<HospitalManagementSystem.Models.AppointmentViewModel>
 
 @{
-    ViewData["Title"] = "Appointments";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Appointments</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Schedule)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DepartmentId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DoctorId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DepartmentName)
-            </th>
-            <th>
-                Status
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (AppointmentViewModel item in  Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Schedule)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartmentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DoctorId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartmentName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Condition)
-            </td>
-            <td>
-                <a href = "/Appointment/AssignAppointment?did=@item.DepartmentId&aid=@item.Id">Edit</a>
-                
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<section class="book">
+    <table class="table text-size">
+        <thead>
+            <tr>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Schedule
+                </th>
+                <th>
+                    Department
+                </th>
+                <th>
+                    UserName
+                </th>
+                <th>
+                    Doctor
+                </th>
+                <th>
+                    Status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Schedule)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DepartmentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DoctorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Condition)
+                    </td>
+                    <td>
+                        <a class= "btn btn-primary btn-lg p-3 mt-0" href = "/Appointment/AssignAppointment?did=@item.DepartmentId&aid=@item.Id">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
+

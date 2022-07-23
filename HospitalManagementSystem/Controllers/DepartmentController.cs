@@ -36,6 +36,24 @@ namespace HospitalManagementSystem.Controllers
             return View(model);
 
         }
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _departmentServices.Delete(id);
+                TempData["ResponseMessage"] = "Successfully Removed Department";
+                TempData["ResponseValue"] = "1";
+                return RedirectToAction("Index");
+
+            }
+            catch
+            {
+                TempData["ResponseMessage"] = "Patient has appointment associated with this department";
+                TempData["ResponseValue"] = "0";
+                return RedirectToAction("Index");
+            }
+
+        }
 
 
     }

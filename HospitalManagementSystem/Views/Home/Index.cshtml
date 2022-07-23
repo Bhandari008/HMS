@@ -1,52 +1,80 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    List<DoctorModel> doctorsList = ViewBag.Doctors;
+    int departmentCount = ViewBag.Departments;
+    int doctorsCount = doctorsList.Count()-1;
+    int appointmentCount = ViewBag.Appointments;
+    int usersCount = ViewBag.Users;
 }
- <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="container-fluid mt-5 d-block w-100" src="https://thumbs.dreamstime.com/b/doctor-woan-holding-hospital-background-horizontal-banner-woman-stethoscope-200769311.jpg" height="500" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img class="mt-5 d-block w-100"src="https://mimanihospital.com/wp-content/uploads/2017/03/abt-banner.jpg" height="500" alt="...">
-      </div>
+<!-- home section starts  -->
+
+<section class="home" id="home">
+
+    <div class="image">
+        <a href="Index"><img src="/images/home-img.svg" alt=""></a>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-<section class="features-icons bg-light text-center">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <img class="m-auto mt-5" src="https://uxwing.com/wp-content/themes/uxwing/download/03-editing-user-action/new-registration.png" width="50" height="50">
-            </div>
-            
-            <h3>Register</h3>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <img class="m-auto mt-5" src="https://thumbs.dreamstime.com/b/doctor-appointment-icon-flat-style-vector-eps-154808882.jpg" width="50" height="50"/>
-            </div>
-            <h3>Book Appointment</h3>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <img class="m-auto mt-5" src="https://cdn0.iconfinder.com/data/icons/medical-health-care-blue-series-set-1/64/a-12-512.png" width="50" height="50"/>
-            </div>
-            <h3>Visit Doctor</h3>
-          </div>
-        </div>
-      </div>
+
+    <div class="content">
+        <h3>stay safe, stay healthy</h3>
+        <p>Welcome to HMS</p>
+        <a href="#" class="btn"> contact us <span class="fas fa-chevron-right"></span> </a>
     </div>
-  </section>
+
+</section>
+
+<!-- home section ends -->
+<!-- icons section starts  -->
+<h1 class="heading"> our <span>records</span> </h1>
+<section class="icons-container">
+    
+    <div class="icons">
+        <i class="fas fa-user-md"></i>
+        <h3>@doctorsCount +</h3>
+        <p>doctors at work</p>
+    </div>
+
+    <div class="icons">
+        <i class="fas fa-users"></i>
+        <h3>@usersCount +</h3>
+        <p>satisfied patients</p>
+    </div>
+
+    <div class="icons">
+        <i class="fas fa-procedures"></i>
+        <h3>@appointmentCount +</h3>
+        <p>appointments</p>
+    </div>
+
+    <div class="icons">
+        <i class="fas fa-hospital"></i>
+        <h3>@departmentCount +</h3>
+        <p>departments</p>
+    </div>
+
+</section>
+<!-- doctors section starts  -->
+
+<section class="doctors" id="doctors">
+
+    <h1 class="heading"> our <span>doctors</span> </h1>
+
+    <div class="box-container">
+        @foreach (var item in doctorsList)
+        {
+            <div class="box">
+
+                <h3>Dr. @item.Name</h3>
+                <span>@item.DepartmentName</span>
+                <div class="share">
+                    <a href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                    <a href="#" class="fab fa-linkedin"></a>
+                </div>
+            </div>
+
+        }
+    </div>
+</section>
+
+<!-- doctors section ends -->

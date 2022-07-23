@@ -19,23 +19,44 @@ namespace HospitalManagementSystem.Services.AppointmentServices
         {
 
             List<AppointmentViewModel> appointment = (from a in _hmsDbContext.Appointment
-                                                      join d in _hmsDbContext.Department on
-                                                      a.DepartmentId equals d.Id
+                                                      join d in _hmsDbContext.Department 
+                                                      on a.DepartmentId equals d.Id
+                                                      join u in _userManager.Users
+                                                      on a.DepartmentId equals u.DepartmentId
                                                       where a.isActive == true
                                                       select new AppointmentViewModel
                                                       {
                                                           Id = a.Id,
                                                           Description = a.Description,
-                                                          DepartmentName = d.DepartmentName,
+                                                          DepartmentName = d.DName,
                                                           Schedule = a.Schedule,
                                                           Condition = a.Condition,
                                                           DepartmentId = a.DepartmentId,
                                                           UserId = a.UserId,
-                                                          DoctorId = a.DoctorId
+                                                          DoctorId = a.DoctorId,
+                                                          DoctorName = u.FullName
+                                                          
                                                       }).ToList();
-
+            List<AppointmentViewModel> Iappointment = (from a in appointment
+                                                       join u in _userManager.Users
+                                                       on a.UserId equals u.Id
+                                                       select new AppointmentViewModel
+                                                       {
+                                                           Id = a.Id,
+                                                           Description = a.Description,
+                                                           DepartmentName = a.DepartmentName,
+                                                           Schedule = a.Schedule,
+                                                           Condition = a.Condition,
+                                                           DepartmentId = a.DepartmentId,
+                                                           UserId = a.UserId,
+                                                           DoctorId = a.DoctorId,
+                                                           DoctorName = a.DoctorName,
+                                                           UserName = u.FullName
+                                                       }).ToList();
            
-            return appointment;
+
+            
+            return Iappointment;
         }
 
         public List<DoctorModel> GetDoctors(int id)

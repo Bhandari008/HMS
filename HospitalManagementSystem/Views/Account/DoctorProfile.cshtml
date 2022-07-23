@@ -6,7 +6,7 @@
     List<AppointmentModel> appointments = ViewBag.Appointment;
 }
 
-<section style="background-color: #eee;">
+<section class = "text-size" style="background-color: #eee;">
   <div class="container py-5 mt-5">
     <div class="row">
       <div class="col-lg-4">
@@ -15,7 +15,7 @@
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
             <h5 class="my-3">Dr. @Model.FullName</h5>
-            <p class="text-muted mb-1">@department[0].DepartmentName</p>
+            <p class="text-muted mb-1">@department[0].DName</p>
             <p class="text-muted mb-4">@Model.UserName</p>
           </div>
         </div>
@@ -65,7 +65,7 @@
 </div>
 </section>
 <h2>Your Appointment Details</h2>
-<table class = "table">
+<table class = "table text-size">
          <thead>
              <tr>
                  <th>Id</th>

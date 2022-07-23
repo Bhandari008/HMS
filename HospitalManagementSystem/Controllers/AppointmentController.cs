@@ -23,27 +23,40 @@ namespace HospitalManagementSystem.Controllers
         public IActionResult Index()
         {
             List<AppointmentViewModel> Appointment = _appointmentServices.Display();
+            int newAppointment = Appointment.Where(x => x.Condition == "Pending").Count();
+            ViewBag.newAppointment = newAppointment;
             return View(Appointment);
         }
         [Authorize(Roles = "Patient")]
         [HttpGet]
         public IActionResult Create()
         {
-            List<SelectListItem> departments = _departmentServices.Display().Select(x=>new SelectListItem { Text=x.DepartmentName,Value=x.Id.ToString()}).ToList();
+            List<SelectListItem> departments = _departmentServices.Display().Select(x=>new SelectListItem { Text=x.DName,Value=x.Id.ToString()}).ToList();
             ViewBag.Departments = departments;
             return View();
         }
-        [Authorize(Roles = "Patient")]
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(AppointmentModel model)
         {
+            try
+            {
                 ApplicationUser CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
                 string uid = CurrentUser.Id;
                 model.UserId = uid;
                 _appointmentServices.Add(model);
+                TempData["ResponseMessage"] = "Appointment Booked Successfully";
+                TempData["ResponseValue"] = "1";
                 return RedirectToAction("Create");
-
-           
+            }
+            catch
+            {
+                TempData["ResponseMessage"] = "Appointment Booked Failed!";
+                TempData["ResponseValue"] = "0";
+                return View(model);
+            }
+                  
         }
         [Authorize(Roles = "Admin")]
         [HttpGet]

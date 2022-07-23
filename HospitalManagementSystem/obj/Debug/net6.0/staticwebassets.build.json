@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mRJlUJHp2bIJ9DWLacEhFIOeuHmxEtZQjXpkCIWlcDA=",
+  "Hash": "+pOSf/dO594MT2mdD/XwMQtySmMckuS6WHFN2YPIXYg=",
   "Source": "HospitalManagementSystem",
   "BasePath": "_content/HospitalManagementSystem",
   "Mode": "Default",
@@ -83,6 +83,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "F:\\Project\\HospitalManagementSystem\\HospitalManagementSystem\\wwwroot\\images\\book-img.svg",
+      "SourceId": "HospitalManagementSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Project\\HospitalManagementSystem\\HospitalManagementSystem\\wwwroot\\",
+      "BasePath": "_content/HospitalManagementSystem",
+      "RelativePath": "images/book-img.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\book-img.svg"
+    },
+    {
+      "Identity": "F:\\Project\\HospitalManagementSystem\\HospitalManagementSystem\\wwwroot\\images\\home-img.svg",
+      "SourceId": "HospitalManagementSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Project\\HospitalManagementSystem\\HospitalManagementSystem\\wwwroot\\",
+      "BasePath": "_content/HospitalManagementSystem",
+      "RelativePath": "images/home-img.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\home-img.svg"
     },
     {
       "Identity": "F:\\Project\\HospitalManagementSystem\\HospitalManagementSystem\\wwwroot\\js\\site.js",

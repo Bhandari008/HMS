@@ -4,30 +4,42 @@
     List<SelectListItem> users = (List<SelectListItem>)ViewBag.Users;
     List<SelectListItem> roles = (List<SelectListItem>)ViewBag.Roles;
 }
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AssignRole" asp-controller="Account" method="post">
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" asp-items="users" class="form-control"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoleId" class="control-label"></label>
-                <select asp-for="RoleId" asp-items="roles" class="form-control"></select>
-                <span asp-validation-for="RoleId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add Role" class="btn btn-primary" />
-            </div>
-        </form>
+
+<h1>AssignDepartment</h1>
+
+<h4>DoctorModel</h4>
+<hr />
+<section class="book">
+    <div class="row d-flex">
+        <div class="col-md-4 container">
+            
+            <form class = "mt-auto" asp-action="AssignRole" asp-controller="Account" method="post">
+                <h3>Assign Role</h3>
+                <div class="form-group-0 mt-4">
+                    <label asp-for="UserId" class="control-label text-size">User</label>
+                    <select asp-for="UserId" asp-items="users" class="form-control box"></select>
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4">
+                    <label asp-for="RoleId" class="control-label text-size">Role</label>
+                    <select  asp-for="RoleId" asp-items="roles" class="form-control-lg box"></select>
+                    <span asp-validation-for="RoleId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add Role" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</section>
+
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

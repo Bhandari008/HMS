@@ -103,7 +103,6 @@ namespace HospitalManagementSystem.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Condition")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DepartmentId")
@@ -114,27 +113,56 @@ namespace HospitalManagementSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DoctorId")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Schedule")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("schedule")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("Appointment", (string)null);
                 });
 
-            modelBuilder.Entity("HospitalManagementSystem.Models.DepartmentModel", b =>
+            modelBuilder.Entity("HospitalManagementSystem.Models.BillModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Condition")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bill", (string)null);
+                });
+
+            modelBuilder.Entity("HospitalManagementSystem.Models.DepartmentModel", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<string>("DepartmentName")
                         .IsRequired()

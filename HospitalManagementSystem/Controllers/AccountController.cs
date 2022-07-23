@@ -1,5 +1,7 @@
 ﻿using HospitalManagementSystem.Models;
 using HospitalManagementSystem.Services.AccountServices;
+using HospitalManagementSystem.Services.AppointmentServices;
+using HospitalManagementSystem.Services.BillServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HospitalManagementSystem.Controllers
 {
-    
+
     public class AccountController : Controller
     {
 
@@ -16,44 +18,54 @@ namespace HospitalManagementSystem.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly HMSDbContext _hmsDbContext;
         private readonly IAccountServices _accountServices;
-        
+        private readonly IAppointmentServices _appointmentServices;
+        private readonly IBillServices _billServices;
 
-        public AccountController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,RoleManager<IdentityRole> roleManager,HMSDbContext hMSDbContext, IAccountServices accountServices)
+
+        public AccountController(
+            IAppointmentServices appointmentServices,
+            UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, HMSDbContext hMSDbContext, IAccountServices accountServices,IBillServices billServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _hmsDbContext = hMSDbContext;
             _accountServices = accountServices;
-        }             
-        
+            _appointmentServices = appointmentServices;
+            _billServices = billServices;
+        }
+
         public async Task<IActionResult> Index()
         {
             ApplicationUser CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
 
-            int currentRole = _accountServices.GetRoleID(CurrentUser);
-            if(currentRole == 1)
-            {
+            string currentRole = _accountServices.GetRoleID(CurrentUser);
+            if (currentRole == "Admin")
+
                 return RedirectToAction("AdminProfile");
-            }
-            else if(currentRole == 2)
-            {
+
+            else if (currentRole == "Doctor")
+
                 return RedirectToAction("DoctorProfile");
-            }
-            else if(currentRole == 3)
-            {
+
+            else if (currentRole == "Patient")
+
                 return RedirectToAction("PatientProfile");
-            }
-            return RedirectToAction("Register");
+
+            else
+                return RedirectToAction("/");
         }
 
-        [Authorize (Roles ="Admin") ]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AdminProfile()
         {
             ApplicationUser CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
+            int appointmentLength = _appointmentServices.Display().Where(x => x.Condition == "Pending").Count();
+
+            ViewBag.AppointmentLength = appointmentLength;
             return View(CurrentUser);
         }
-        [Authorize (Roles ="Doctor")]
+        [Authorize(Roles = "Doctor")]
         public async Task<IActionResult> DoctorProfile()
         {
             ApplicationUser CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
@@ -65,12 +77,14 @@ namespace HospitalManagementSystem.Controllers
             return View(CurrentUser);
         }
 
-        [Authorize (Roles ="Patient")]
+        [Authorize(Roles = "Patient")]
         public async Task<IActionResult> PatientProfile()
         {
             ApplicationUser CurrentUser = await _userManager.GetUserAsync(HttpContext.User);
             String uid = CurrentUser.Id;
             List<AppointmentModel> appointments = _accountServices.GetAppointmentForUser(uid);
+            int billCount = _billServices.GetBillForUser(uid).Where(x => x.Condition == "Pending").Count();
+            ViewBag.BillCount = billCount;
             ViewBag.Appointment = appointments;
             return View(CurrentUser);
         }
@@ -84,22 +98,36 @@ namespace HospitalManagementSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(UserModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                ApplicationUser User = new ApplicationUser
+                if (ModelState.IsValid)
                 {
-                    UserName = model.Username,
-                    FullName = model.FullName,
-                    PhoneNumber = model.PhoneNumber
-                };
-                IdentityResult result = await _userManager.CreateAsync(User, model.Password);
-                if (result.Succeeded)
-                {
-                    return Redirect("Login");
-                }
 
+                    ApplicationUser User = new ApplicationUser
+                    {
+                        UserName = model.Username,
+                        FullName = model.FullName,
+                        PhoneNumber = model.PhoneNumber
+                    };
+                    IdentityResult result = await _userManager.CreateAsync(User, model.Password);
+
+                    if (result.Succeeded)
+                    {
+
+                        return Redirect("Login");
+                    }
+                    TempData["ResponseMessage"] = "User Registered Successfully";
+                    TempData["ResponseValue"] = "1";
+                    return RedirectToAction("Index");
+                }
             }
-            return View(model);      
+            catch
+            {
+                TempData["ResponseMessage"] = "User Registered Failed!";
+                TempData["ResponseValue"] = "0";
+                
+            }
+            return View(model);
         }
         [HttpGet]
         [AllowAnonymous]
@@ -111,19 +139,55 @@ namespace HospitalManagementSystem.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                ApplicationUser user = await _userManager.FindByNameAsync(model.Username);
-                if(user!=null)
+                if (ModelState.IsValid)
                 {
-                    bool result = await _userManager.CheckPasswordAsync(user, model.Password);
-                    await _signInManager.SignInAsync(user, true);
-                    return RedirectToAction("Index");
+                    ApplicationUser user = await _userManager.FindByNameAsync(model.Username);
+                    if (user != null)
+                    {
+                        bool result = await _userManager.CheckPasswordAsync(user, model.Password);
+                        if (result)
+                        {
+                            await _signInManager.SignInAsync(user, result);
+                            return Redirect("/Home");
+                        }
+                        else
+                        {
+                            TempData["ResponseMessage"] = "Password Wrong";
+                            TempData["ResponseValue"] = "0";
+                            return View(model);
+                        }
+                    }
+                    else
+                    {
+                        TempData["ResponseMessage"] = "UserName Not Found";
+                        TempData["ResponseValue"] = "0";
+                        return View(model);
+                    }
+                }
+                else
+                {
+                    TempData["ResponseMessage"] = "Please Enter the Correct Data";
+                    TempData["ResponseValue"] = "0";    
+                    return View(model);
                 }
             }
-            return View(model);
+            catch
+            {
+                TempData["ResponseMessage"] = "Something Went Wrong! Please try Agaian";
+                TempData["ResponseValue"] = "0";
+                return View(model);
+            }
+            
+
         }
-        
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Redirect("/Home");
+        }
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult AssignRole()
@@ -134,41 +198,41 @@ namespace HospitalManagementSystem.Controllers
             ViewBag.Roles = roleList;
             return View();
         }
-        
+
         [HttpPost]
-        [Authorize (Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AssignRole(RoleModel model)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser User = _userManager.Users.FirstOrDefault(x => x.Id == model.UserId);
                 IdentityRole Role = _roleManager.Roles.FirstOrDefault(x => x.Id == model.RoleId.ToString());
-                if(User!=null & Role!= null)
+                if (User != null & Role != null)
                 {
                     await _userManager.AddToRoleAsync(User, Role.Name);
                     return RedirectToAction("Index");
-                }    
+                }
             }
             return View(model);
         }
 
         [HttpGet]
-        [Authorize (Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult AssignDepartment()
         {
             List<ApplicationUser> Doctors = (from u in _userManager.Users
-                                   join r in _hmsDbContext.UserRoles
-                                   on u.Id equals r.UserId
-                                   where r.RoleId == "2"
-                                   select new ApplicationUser
-                                   {
-                                       Id = u.Id,
-                                       FullName = u.FullName
-                                       
-                                   }).ToList();
+                                             join r in _hmsDbContext.UserRoles
+                                             on u.Id equals r.UserId
+                                             where r.RoleId == "2"
+                                             select new ApplicationUser
+                                             {
+                                                 Id = u.Id,
+                                                 FullName = u.FullName
+
+                                             }).ToList();
 
             List<SelectListItem> doctorList = Doctors.Select(x => new SelectListItem { Text = x.FullName, Value = x.Id }).ToList();
-            List<SelectListItem> departmentList = _hmsDbContext.Department.Select(x => new SelectListItem {Text=x.DepartmentName,Value=x.Id.ToString() }).ToList();
+            List<SelectListItem> departmentList = _hmsDbContext.Department.Select(x => new SelectListItem { Text = x.DName, Value = x.Id.ToString() }).ToList();
             ViewBag.Doctors = doctorList;
             ViewBag.Departments = departmentList;
             return View();
@@ -177,8 +241,8 @@ namespace HospitalManagementSystem.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AssignDepartment(ApplicationUser user)
         {
-            
-            ApplicationUser iUser= await _userManager.FindByIdAsync(user.Id);
+
+            ApplicationUser iUser = await _userManager.FindByIdAsync(user.Id);
             iUser.DepartmentId = user.DepartmentId;
             IdentityResult result = await _userManager.UpdateAsync(iUser);
             if (result.Succeeded)
@@ -186,7 +250,7 @@ namespace HospitalManagementSystem.Controllers
                 return RedirectToAction("Index");
             }
             return View(user);
-            
+
         }
     }
 }

@@ -12,7 +12,7 @@ namespace HospitalManagementSystem.Services.AccountServices
 
         public List<AppointmentModel> GetAppointmentForUser(string userId);
 
-        public int GetRoleID(ApplicationUser user);
+        public string GetRoleID(ApplicationUser user);
 
     }
 }

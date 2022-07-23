@@ -1,0 +1,42 @@
+﻿@model HospitalManagementSystem.Models.BillModel
+
+@{
+    ViewData["Title"] = "Create";
+    List<SelectListItem> appointmentList = ViewBag.Appointment;
+    List<SelectListItem> usersList = ViewBag.Users;
+}
+
+
+<hr />
+<section class = "book">
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="Bill" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label text-size"></label>
+                <select asp-items = "usersList" asp-for="UserId" class="form-control box" ></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppointmentId" class="control-label text-size"></label>
+                <select asp-for="AppointmentId" asp-items="appointmentList" class="box"></select>
+                <span asp-validation-for="AppointmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label text-size"></label>
+                <input asp-for="Amount" class="form-control box" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+</section>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
